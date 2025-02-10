@@ -4,8 +4,10 @@ interface AmphibiansRepository {
     suspend fun getAmphibians(): List<Amphibian>
 }
 
-class NetworkAmphibiansRepository() : AmphibiansRepository {
+class NetworkAmphibiansRepository(
+    val retrofitService: AmphibiansApiService
+) : AmphibiansRepository {
     override suspend fun getAmphibians(): List<Amphibian> {
-        return AmphibiansApi.retrofitService.getAmphibians()
+        return retrofitService.getAmphibians()
     }
 }

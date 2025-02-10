@@ -1,7 +1,6 @@
 package com.example.amphibians.ui.screen
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,7 +41,7 @@ import com.example.amphibians.data.Amphibian
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: AmphibiansViewModel = viewModel(),
+    viewModel: AmphibiansViewModel = viewModel(factory = AmphibiansViewModel.Factory),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
