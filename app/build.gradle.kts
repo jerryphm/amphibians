@@ -57,15 +57,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Retrofit
+    // Retrofit & converter
     implementation(libs.retrofit)
+    implementation(libs.converterGson)
 
     // Coil
     implementation(libs.coilCompose)
     implementation(libs.coilNetworkOkhttp)
-
-    // Serialization
-    implementation(libs.serializationLib)
 
     // ViewModel
     implementation(libs.viewmodelCompose)

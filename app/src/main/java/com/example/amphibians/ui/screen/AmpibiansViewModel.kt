@@ -1,10 +1,13 @@
 package com.example.amphibians.ui.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.amphibians.ui.Amphibian
+import androidx.lifecycle.viewModelScope
+import com.example.amphibians.data.Amphibian
+import com.example.amphibians.data.AmphibiansApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 sealed interface AmphibiansUiState {
     data class Success(val amphibians: List<Amphibian>): AmphibiansUiState
@@ -17,17 +20,15 @@ class AmphibiansViewModel: ViewModel() {
     val uiState = _uiState.asStateFlow()
 
     private fun getAmphibiansData() {
-        _uiState.value = AmphibiansUiState.Success(
-            listOf(
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-                Amphibian("test", type = "test", description = "test", imgSrc = "test"),
-            )
-        )
+        viewModelScope.launch {
+            try {
+                val result = AmphibiansApi.retrofitService.getAmphibians()
+                Log.d("jerrytet", "getAmphibiansData: $result")
+                _uiState.value = AmphibiansUiState.Success(result)
+            } catch (e: Exception) {
+                _uiState.value = AmphibiansUiState.Error()
+            }
+        }
     }
 
     init {
